@@ -1,33 +1,43 @@
-# Game options
-options = ["rock", "paper", "scissors"]
-
-def get_computer_choice():
-    return get_computer_choice.choice(['rock','paper','scissors'])
+import random
 
 def get_user_choice():
-    choice = input("Enter rock, paper, or scissors: ").lower()
-    while choice not in options:
-        choice = input("Invalid choice. Please enter rock, paper, or scissors: ").lower()
-    return choice
+    while True:
+        user_choice = input("Enter your choice (rock, paper, or scissors): ").lower()
+        if user_choice in ['rock', 'paper', 'scissors']:
+            return user_choice
+        else:
+            print("Invalid choice. Please enter 'rock', 'paper', or 'scissors'.")
 
 def determine_winner(user_choice, computer_choice):
     if user_choice == computer_choice:
-        return "It's a tie!"
-    elif (user_choice == "rock" and computer_choice == "scissors") or \
-         (user_choice == "scissors" and computer_choice == "paper") or \
-         (user_choice == "paper" and computer_choice == "rock"):
-        return "You win!"
+        return 'tie'
+    elif (
+        (user_choice == 'rock' and computer_choice == 'scissors') or
+        (user_choice == 'paper' and computer_choice == 'rock') or
+        (user_choice == 'scissors' and computer_choice == 'paper')
+    ):
+        return 'user'
     else:
-        return "You lose!"
+        return 'computer'
+
+def print_result(winner, user_choice, computer_choice):
+    print(f"\nYou chose {user_choice}.")
+    print(f"The computer chose {computer_choice}.")
+
+    if winner == 'tie':
+        print("It's a tie!")
+    elif winner == 'user':
+        print("Congratulations! You win!")
+    else:
+        print("Sorry, you lose. Better luck next time.")
 
 def play_game():
     user_choice = get_user_choice()
-    computer_choice = get_computer_choice()
-    
-    print(f"\nYou chose {user_choice}, computer chose {computer_choice}.")
-    
-    result = determine_winner(user_choice, computer_choice)
-    print(result)
+    computer_choice = random.choice(['rock', 'paper', 'scissors'])
 
-# Run the game
-play_game();
+    winner = determine_winner(user_choice, computer_choice)
+
+    print_result(winner, user_choice, computer_choice)
+
+if __name__ == "__main__":
+    play_game()
